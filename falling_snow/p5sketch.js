@@ -4,17 +4,18 @@ function setup() {
     var canvas = createCanvas(600, 800);
     canvas.parent("results")
     fill(100)
-
     frameRate(30)
-    let numberOfSnowflakes = 100
 
-    generateSnowflakes(numberOfSnowflakes)
+    $("#submitForm").click(function() {
+        let numberOfSnowflakes = parseInt($("#snowflakesNumber").val())
+        generateSnowflakes(numberOfSnowflakes)
+    })
 }
 
 function draw() {
     background('brown');
 
-    generateSnowflakes(5)
+    //generateSnowflakes(5)
 
     snowflakes.forEach(s => {
         if (s.pos.y > windowHeight) {
@@ -30,7 +31,7 @@ function generateSnowflakes(number) {
     for (let i = 0; i < number; i++) {
         let randX = Math.floor(Math.random() * windowHeight)
         let randY = Math.floor(Math.random() * 100)
-        let speed = Math.floor(Math.random() * 5) + 1
+        let speed = Math.floor(Math.random() * parseInt($("#maxSpeed").val())) + 1
 
         snowflake = new Snowflake(randX, randY, speed )
         snowflake.generate()
