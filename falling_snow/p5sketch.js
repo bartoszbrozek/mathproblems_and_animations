@@ -1,7 +1,9 @@
 let snowflakes = []
+let canvasWidth = 600
+let canvasHeight = 100
 
 function setup() {
-    var canvas = createCanvas(600, 800);
+    var canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent("results")
     fill(100)
     frameRate(30)
@@ -15,15 +17,9 @@ function setup() {
 function draw() {
     background('brown');
 
-    //generateSnowflakes(5)
-
     snowflakes.forEach(s => {
-        if (s.pos.y > windowHeight) {
-            snowflakes.pop(s.indexOf)
-        } else {
             s.update()
             s.draw()
-        }
     })
 }
 
@@ -31,8 +27,9 @@ function generateSnowflakes(number) {
     for (let i = 0; i < number; i++) {
         let randX = Math.floor(Math.random() * windowHeight)
         let randY = Math.floor(Math.random() * 100)
-        let speed = Math.floor(Math.random() * parseInt($("#maxSpeed").val())) + 1
+        //let speed = Math.floor(Math.random() * parseInt($("#maxSpeed").val())) + 1
 
+        let speed = 1
         snowflake = new Snowflake(randX, randY, speed )
         snowflake.generate()
         snowflakes.push(snowflake)
@@ -45,7 +42,7 @@ class Snowflake {
         this.b = b
         this.speed = speed
         this.pos = null
-        this.size = random(2, 5);
+        this.size = random(5, 15);
     }
 
     generate() {
@@ -53,8 +50,19 @@ class Snowflake {
     }
 
     update() {
-        this.pos.y++
-        this.pos.x -= Math.sin(Math.PI /2)
+        if (this.pos.y < canvasHeight) {
+            let cont = true
+
+            snowflakes.forEach(s => {
+                if (cont && s.pos.x === this.pos.x && s.pos.y === this.pos.y +10 ) {
+                    cont = false
+                }
+            }) 
+
+            if (cont) {
+                this.pos.y++
+            }
+        }
     }
 
     draw() {
