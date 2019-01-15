@@ -70,4 +70,4 @@ class Snowflake {
         noStroke()
         ellipse(this.pos.x, this.pos.y * this.speed, this.size);
     }
-}
+} this.size
